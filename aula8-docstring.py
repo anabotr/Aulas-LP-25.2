@@ -141,3 +141,45 @@ __docformat__ = "restructuredtext"  # Sphinx-friendly
 #    - Extrair cálculo de métricas para "metrics.py"
 #    - Cobrir com testes de borda (NaN, inf)
 #    - Documentar no README (seção "Métricas")
+
+def juros_simples():
+    pass
+def juros_compostos():
+    pass
+def taxa_efetiva():
+    pass
+
+
+import argparse
+import logging
+import math
+import sys
+import textwrap
+import warnings
+
+from typing import Sequence, TypeAliasType
+
+
+#Define que queremos um logging de info ou superior
+#levelname é warning, critical, etc
+#ta escrito em documentação sphinx
+logging.basicConfig(level = logging.INFO, fomat = "%(levelname)s:%(name)s:%(message)s")
+logger1 = logging.getLogger('documentacao_avancada')
+logger2 = logging.getLogger('qqrcoisa')
+
+#ele está emitindo um aviso do nível info
+logger1.info("Tarefa Iniciada")
+
+
+'''Níveis de warning:
+    Debug = 10
+    
+    Info = 20
+    
+    Warning = 30
+    
+    Error = 40
+    
+    Critical = 50
+    
+    '''
