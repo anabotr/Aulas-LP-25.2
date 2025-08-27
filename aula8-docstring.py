@@ -169,7 +169,9 @@ logger2 = logging.getLogger('qqrcoisa')
 
 #ele está emitindo um aviso do nível info
 logger1.info("Tarefa Iniciada")
-
+logger1.debug("Deveria ser invisível")
+logger1.warning("Período próximo ao limite para cálculo")
+logger1.error("Erro de parâmetro")
 
 '''Níveis de warning:
     Debug = 10
