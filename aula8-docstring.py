@@ -142,13 +142,20 @@ __docformat__ = "restructuredtext"  # Sphinx-friendly
 #    - Cobrir com testes de borda (NaN, inf)
 #    - Documentar no README (seção "Métricas")
 
-def juros_simples():
-    pass
-def juros_compostos():
-    pass
-def taxa_efetiva():
-    pass
 
+
+# Níveis de warning:
+#     Debug = 10
+    
+#     Info = 20
+    
+#     Warning = 30
+    
+#     Error = 40
+    
+#     Critical = 50
+    
+    
 
 import argparse
 import logging
@@ -163,25 +170,79 @@ from typing import Sequence, TypeAliasType
 #Define que queremos um logging de info ou superior
 #levelname é warning, critical, etc
 #ta escrito em documentação sphinx
-logging.basicConfig(level = logging.INFO, fomat = "%(levelname)s:%(name)s:%(message)s")
+logging.basicConfig(
+    level = logging.INFO,
+    format = "%(asctime)s%(levelname)s:%(name)s:%(message)s",
+    force = True)
+#Depois que se cria a configuração do logging, ela é permanentemente setada,
+#mesmo que mude no código, não vai mudar no objeto. Pra modificar, é necessário
+#usar force = True
+
+
 logger1 = logging.getLogger('documentacao_avancada')
 logger2 = logging.getLogger('qqrcoisa')
 
-#ele está emitindo um aviso do nível info
-logger1.info("Tarefa Iniciada")
-logger1.debug("Deveria ser invisível")
-logger1.warning("Período próximo ao limite para cálculo")
-logger1.error("Erro de parâmetro")
+#ele está emitindo um aviso do nível info, debug, warning, etc
+# logger1.info("Tarefa Iniciada")
+# logger1.debug("Deveria ser invisível")
+# logger1.warning("Período próximo ao limite para cálculo")
+# logger1.error("Erro de parâmetro")
 
-'''Níveis de warning:
-    Debug = 10
+def juros_simples(capital:float,
+                  taxa_percentual:float,
+                  periodos:float) -> tuple[float, float]:
+    """ Calcula montante e juros em regime de juros simples.
+
+    Parameters
+    ----------
+    capital : float
+        Valor incial sobre o qual incidem os juros (precisa ser >= 0).
+    taxa_percentual : float
+        Taxa por período (5 significa 5%, precisa ser >= 0).
+    periodos : float
+        Número de períodos (precisa ser >= 0).
+
+    Returns
+    -------
+    tuple[float, float]
+        (montante, juros), ambos arredondados para duas casas decimais.
+
+
+    Raises
+    -------
+    ValueError
+        Se qualquer parâmetro for negativo.
+
+    """
+    if capital < 0 or taxa_percentual < 0 or periodos < 0:
+        raise ValueError("Parâmetros negativos não são aceitos.")
     
-    Info = 20
+    juros = capital*(taxa_percentual/100.0) * periodos
+    montante = capital + juros
     
-    Warning = 30
-    
-    Error = 40
-    
-    Critical = 50
-    
-    '''
+    return (round(montante, 2), round(juros, 2))
+
+
+def juros_compostos():
+    pass
+def taxa_efetiva():
+    pass
+
+
+def demonstracao_pydoc_help() -> None:
+    print("#"*60)
+    print("Demonstração de help() e __doc__")
+    print(" - help(juros_simples): ")
+    help(juros_simples)
+    primeira_linha = juros_simples.__doc__
+    if isinstance(primeira_linha, str):
+        primeira_linha = primeira_linha.strip().splitlines()[0]
+        print(" - Primeira linha da docstring de juros simples:\n", 
+              primeira_linha)
+
+#demonstracao_pydoc_help()
+
+#Essa parte mostra todos os handlers dentro do logging que configuramos
+# for index_, handler_ in enumerate(logging.getLogger().handlers):
+#     print(index_, type(handler_), getattr(handler_.formatter, "_fmt", None))
+
