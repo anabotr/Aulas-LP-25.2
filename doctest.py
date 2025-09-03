@@ -156,6 +156,9 @@ __docformat__ = "restructuredtext"  # Sphinx-friendly
 #     Critical = 50
     
     
+#------------------------------------------------------------------------------
+#TIP: Aula 8 - 27/08
+
 
 import argparse
 import logging
@@ -163,7 +166,7 @@ import math
 import sys
 import textwrap
 import warnings
-
+from typing import Sequence, TypeAlias
 
 #Define que queremos um logging de info ou superior
 #levelname é warning, critical, etc
@@ -188,9 +191,6 @@ logger1.debug("Deveria ser invisível")
 # logger1.warning("Período próximo ao limite para cálculo")
 # logger1.error("Erro de parâmetro")
 
-
-
-from typing import Sequence, TypeAlias
 
 #criamos um tipo (como int, string, etc), porém, esse tipo novo é só um apelido
 #para uma tupla com dois elementos floats
@@ -258,4 +258,102 @@ def demonstracao_pydoc_help() -> None:
 #TIP: aula 10 - 03/09
 
 def construir_parser() -> argparse.ArgumentParser():
+    """ Cria um parer de linha de comando para deonstração
+    
+    Retorna um parser com subcomandos:
+     - simples : calcula juros simples.
+    """
+    
+    parser_principal = argparse.ArgumentParser(
+        prog= "aula de documentação", #nome do parser
+        description= "Exemplo de CLI documentada utilizando Argparse",
+        formatter_class= argparse.RawDescriptionHelpFormatter(), 
+        #vai ser usado pelo parser para saber como ler uma string
+        epilog= textwrap.dedent(
+            """
+            Exemplos:
+                python doctest.py simples --capital 1000 --taxa 5 --tempo 2
+            """))
+            
+    #para cada comando que queremos, adicionamos um subparser
+    #aqui, falamos que dentro do parser tem um subparser (dentro de um cara que
+    #faz algo tem outros carinhas que fazem coisas)
+    #esse nome comando vai ter um comando como "simples", "composto", etc
+    subcomandos = parser_principal.add_subparsers(dest="nome_comando", 
+                                                  required= True)
+    
+    #esse parser busca dentro da string principal o comando simples, sempre que
+    #ele encontra o simples, ele cria um subcomando em que nome_comando é simples
+    parser_simples = subcomandos.add_parser(
+        "simples", 
+        help="Calcula montante e juros em regime de juros simples")
+    #o parser simples vai pegar tembém os argumentos abaixo
+    parser_simples.add_argument("--capital", 
+                                type = float, 
+                                required = True, 
+                                help ="Valor inicial sobre o qual incidem os juros")
+    parser_simples.add_argument("--taxa", 
+                                type = float, 
+                                required = True,
+                                help = "Taxa por período (em porcentagem)")
+    parser_simples.add_argument("--tempo", 
+                                type = float, 
+                                required= True,
+                                help = "Tempo da aplicação em juros simples")
+    
+    return parser_principal
+
+#saída 0 significa sucesso, qualquer coisa diferente significa falha
+def executar_CLI(lista_argumentos : Sequence[str]) -> int:
+    """
+    Executa a CLI de demonstração
+
+    Parameters
+    ----------
+    lista_argumentos : Sequence[str]
+        Argumentos recebidos via CLI.
+
+    Returns
+    -------
+    int
+        Código de saída (0 para sucesso).
+
+    """
+    
+    #criamos o parser e chamamos o método parse_args, onde tem os argumentos
+    #do parser
+    parser_principal = construir_parser()
+    argumentos = parser_principal.parse_args(lista_argumentos)
+    
+    #os nomes do parametros vão ser os pegados em parse
+    #é bom que se padronizem os nomes!!!!!!!!!!!!!!!
+    if argumentos.nome_comando == "simples":
+        montante, juros = juros_simples(argumentos.capital, 
+                                        argumentos.taxa, 
+                                        argumentos.tempo)
+        print(f"Montante: {montante:.2f} e Juros = {juros:.2f}")
+    else:
+        parser_principal.error("Subcomando desconhecido.")
+    
+    return 0
+
+def main() -> int:
     pass
+#vai ficar pra proxima aula mas vai ser a função que o driver code vai chamar
+
+#main retorna um inteiro, se chamamos main usando systemexit no raise, forçamos
+#que o retorno da main vá para o sistema operacional como status de saída do seu
+#programa. Seu programa ta executando mas o raise fica no ar pq a main ainda ta 
+#rodando o return da main vai pro system exit e ele é uma exceção que quebra o 
+#programa, levando pro SO o que foi retornado
+if __name__ == "__main__":
+    print("Versão do módulo:", __version__, "\n")
+    raise SystemExit(main())
+    
+    
+#TODO: fazer as funções de juros compostos e taxas efetivas, e integrar eles a
+#tudo o que fizemos, como por exemplo no parser.
+#padronizar nomes de variáveis
+#colocar raise, exceção, documentação e etc etc etc
+#criar o main para executar o código! ela retorna 0 ou 1: ela pega os argumentos 
+#que vieram no seu programa e executa a cli
