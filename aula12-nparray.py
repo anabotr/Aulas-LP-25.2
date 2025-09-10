@@ -65,7 +65,7 @@ print("y: \n", y, "\n")
 print('Operações e Agregações em NDArrays')
 print("Soma elemento a elemento:\n", x+y)
 print("Multiplicação elemento a elemento:\n", x*y)
-]print("Transposta de x:\n", x.T)
+print("Transposta de x:\n", x.T)
 
 #Operações com agregação diminuem a dimensão do objeto
 print("Soma total dos elementos de x:\n", np.sum(x))
