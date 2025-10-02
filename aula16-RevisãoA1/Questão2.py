@@ -56,5 +56,5 @@ def converter_celsius_para_fahrenheit(temperaturas : list[int | float]) -> list[
 import doctest
 
 if __name__ == "__main__":
-    doctest.testmod()
+    print(doctest.testmod())
     

@@ -26,8 +26,8 @@ def oi():
 @registrar_execucao
 def multiplicar(x,y):
     return(x*y)
-
-
+import doctest
+print(doctest.testmod())
 
 oi()
 print(multiplicar(2,5))

@@ -67,4 +67,6 @@ class TestPalindromo(unittest.TestCase):
         self.assertFalse(eh_palindromo("ana beatriz"))
 
 if __name__ == "__main__":
+    import doctest
+    print(doctest.testmod())
     unittest.main()
