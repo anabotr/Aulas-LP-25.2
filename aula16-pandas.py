@@ -91,7 +91,7 @@ df["Coluna Extra"] = df["Nota"]/2
 print(df)
 print("_"*60)
 
-#linha: axis = 0 (padrão); coluna: axis = 1
+#percorrendo as colunas: axis = 0 (padrão); percorrendo as linhas: axis = 1
 #o drop retorna um df sem a coluna, mas não substitui o original, a menos que
 #usemos inplace = True
 df.drop("Coluna Extra", axis = 1, inplace = True)
