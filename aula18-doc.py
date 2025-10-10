@@ -65,15 +65,14 @@ fmt = ConciseDateFormatter(locator)
 
 #10)
 ax1 = fig.add_subplot(gs[0, 0])
-df.plot(kind = "line", x = 'dates', y = 'temp', lw = 1.0, title= "Temperatura por data", ylabel = "°C", label = "Temperatura", ax = ax1, color = 'orange')
+df['Datas'] = df['dates'].dt.strftime('%d-%b')
+df.plot(kind = "line", x = 'Datas', y = 'temp', lw = 1.0, title= "Temperatura por data", ylabel = "°C", label = "Temperatura", ax = ax1, color = 'orange')
+df["Média móvel"].plot(kind = "line", label = "Média móvel")
+ax1.fill_between(df['Datas'], df['temp'], base_temp, where=(df['temp'] < base_temp), color='blue', alpha=0.15, label = "Menor que temperatura base")
+ax1.fill_between(df['Datas'], df['temp'], base_temp, where=(df['temp'] > base_temp), color='red', alpha=0.15, label = "Maior que temperatura base")
+ax1.legend()
 ax1.xaxis.set_major_locator(locator)
 ax1.xaxis.set_major_formatter(fmt)
-
-
-ax = df.plot(kind = "line", x = 'temp', y ='Média móvel', lw = 2.0, title= "Média móvel por temperatura", ylabel = "°C", label = "Temperatura")
-ax.fill_between(df['temp'], df['Média móvel'], base_temp, where=(df['temp'] < base_temp), color='blue', alpha=0.15, label = "Menor que temperatura base")
-ax.fill_between(df['temp'], df['Média móvel'], base_temp, where=(df['temp'] > base_temp), color='red', alpha=0.15, label = "Maior que temperatura base")
-ax.legend()
 
 #11)
 ax2 = fig.add_subplot(gs[0,1])
@@ -112,4 +111,3 @@ ax4_t.legend(loc="upper right")
 #14)
 plt.tight_layout()
 fig.savefig("numpy_matplotlib.png", dpi=150)
-
