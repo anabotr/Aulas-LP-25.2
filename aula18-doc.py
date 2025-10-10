@@ -49,11 +49,6 @@ filtro = np.ones(7)/7
 media_1 = np.convolve(filtro, temp, mode = 'valid')
 media_movel = np.convolve(filtro, temp)
 
-#formatando a média móvel para ter o mesmo tamanho de temp mas apenas os valores
-#válidos
-media_movel[:6] = 0
-media_movel[-6:] = 0
-
 #aqui eu defini que estou usando a média centrada no valor atual, então, os 3
 #primeiros e 3 últimos dias têm média 0
 media_movel = media_movel[3:-3]
@@ -62,15 +57,59 @@ df["Média móvel"] = media_movel
 
 #PARTE B
 #9)
-fig = df.plot(figsize=(12,8))
-#gs = fig.add_gridspec(2, 2, hspace=0.35, wspace=0.25)
+fig = plt.figure(figsize=(12,8))
+gs = fig.add_gridspec(2, 2, hspace=0.35, wspace=0.25)
 locator = AutoDateLocator() 
 fmt = ConciseDateFormatter(locator)
-fig.xaxis.set_major_locator(locator)
-fig.xaxis.set_major_formatter(fmt)
 
 
 #10)
-#ax1 = fig.add_subplot(gs[0, 0])
-ax1 = df.plot(kind = "line", x = dates, y = temp, lw = 1.0)
-plt.plot()
+ax1 = fig.add_subplot(gs[0, 0])
+df.plot(kind = "line", x = 'dates', y = 'temp', lw = 1.0, title= "Temperatura por data", ylabel = "°C", label = "Temperatura", ax = ax1, color = 'orange')
+ax1.xaxis.set_major_locator(locator)
+ax1.xaxis.set_major_formatter(fmt)
+
+
+ax = df.plot(kind = "line", x = 'temp', y ='Média móvel', lw = 2.0, title= "Média móvel por temperatura", ylabel = "°C", label = "Temperatura")
+ax.fill_between(df['temp'], df['Média móvel'], base_temp, where=(df['temp'] < base_temp), color='blue', alpha=0.15, label = "Menor que temperatura base")
+ax.fill_between(df['temp'], df['Média móvel'], base_temp, where=(df['temp'] > base_temp), color='red', alpha=0.15, label = "Maior que temperatura base")
+ax.legend()
+
+#11)
+ax2 = fig.add_subplot(gs[0,1])
+df.plot(kind = "scatter", alpha = 0.7, x='temp', y='energy', xlabel = "°C", ylabel = "Energia", title="Energia por Temperatura", label = "Energia", ax = ax2)
+for i in indexes:
+    ax2.annotate("spike", (df["temp"].iloc[i], df["energy"].iloc[i]),
+                 xytext=(8, 8), textcoords="offset points",
+                 arrowprops=dict(arrowstyle="->", facecolor = 'black', lw=2.0))
+ax2.legend()
+
+#12)
+ax3 = fig.add_subplot(gs[1,0])
+df["temp"].plot(kind = 'hist', alpha = 0.7, title = "Histograma de temperaturas", xlabel= "°C", ylabel="Contagem", label = "Quantidade", ax = ax3, color = "orange")
+
+
+#13)
+df.set_index("dates", inplace=True)
+weekly = df.resample("W").agg({"energy":"sum", "temp":"mean"})
+ax4 = fig.add_subplot(gs[1, 1])
+weekly.index = weekly.index.strftime("%d-%b") #mudamos para string para plotar
+#no documento pede width = 5, como as barras estavam se sobrepondo, tomamos liberdade para colocar 0.5
+weekly["energy"].plot(kind='bar', width = 0.5, align = 'center', label="Energia (semanal)", ax=ax4, title = "Comparação semanal", color = "orange", alpha = 0.4)
+ax4.set_ylabel("Energia")
+ax4.xaxis.set_major_locator(locator)
+ax4.xaxis.set_major_formatter(fmt)
+
+ax4_t = ax4.twinx()
+
+weekly["temp"].plot(kind='line', marker="o", lw=1.8, label="Temp média (semanal)", ax=ax4_t)
+ax4_t.set_ylabel("°C")
+ax4_t.set_xlabel("Semanas")
+
+ax4.legend(loc="upper left")
+ax4_t.legend(loc="upper right")
+
+#14)
+plt.tight_layout()
+fig.savefig("numpy_matplotlib.png", dpi=150)
+
