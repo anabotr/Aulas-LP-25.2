@@ -57,8 +57,5 @@ precisamos ler várias partes do código - funções, banco de dados...
 Não há também garantia de consistência: podem ocorrer vários erros.
 O que resolve isso é o princípio de responsabilidade única: um tema/unidade 
 deve ter uma responsabilidade clara e que é dele, e apenas dele. Isso ajuda a 
-entender o código, testar, resolver problemas
+entender o código, testar, resolver problemas.
 """
-
-
-

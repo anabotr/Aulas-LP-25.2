@@ -1,0 +1,161 @@
+#queremos fazer a tarnsição de um sistema procedural para um sistema orientado
+#a objetos
+
+#objetos têm estados, que são valores/características, exemplo, string = "Ana"
+#eles também têm comportamentos, por exemplo, string.lower()
+
+#a classe diz pro python como criar um objeto com determinados comportamentos
+#e atributos
+
+from datetime import datetime
+
+#classes precisam de docstring (que não terminamos de completar, mas pode ter 
+#até doctest)
+class Account:
+    """
+    Representa uma conta bancária simples.
+    
+    Attributes:
+        owner (str): Name of the account holder.
+        currency (str): Account currency code (e.g. "BRL", "USD").
+        balance (float): Current balance of the account.
+        
+    Methods:
+        deposit(amount): ...
+        withdraw(amount): ...
+        show_balance(): ...
+    
+    Example:
+        >>>...
+    """
+    #init é o primeiro método que criamos, ele é chamado automaticamente quando
+    #chamamos a classe
+    
+    #self é o objeto sobre o qual init vai operar, ele não cria o objeto, pega
+    #algo já pronto e inicializa
+    def __init__(self, owner: str, currency: str = "BRL", 
+                 initial_balance: float = 0.0):
+        """
+        docstring que não vamos fazer agora!
+
+        Parameters
+        ----------
+        owner : str
+            DESCRIPTION.
+        currency : str, optional
+            DESCRIPTION. The default is "BRL".
+        intial_balance : float, optional
+            DESCRIPTION. The default is 0.0.
+
+        Returns
+        -------
+        None.
+
+        """
+        
+        #o init pega o valor que te interessa e encaixa no objeto que foi dado
+        
+        #abaixo estamos criando um atributo, se o atributo owner já exite, ele
+        #sobrescreve, senão, ele cria
+        self.owner = owner
+        self.currency = currency
+        
+        self._balance = float(initial_balance) #usar um underscore significa
+        #que o atributo é protegido e só deve ser modificado dentro da classe
+        #(e não no driver code) as classes filhas herdam.
+        #Apesar de mutável, chamamos balance de membro de dados PROTEGIDO
+        #Em outras linguagens de programação, apenas a classe em que um membro
+        #de dados privado foi criado pode mudá-lo.
+        #Se usamos dunder, criamos uma camada de dificuldade mas ainda é 
+        #possível mudar o atributo de fora da classe, ele se torna privado, as 
+        #classes filhas não herdam
+        
+        #Para acessar um dado privado/protegido, criamos um ponto de acesso
+        #(método) público para acessá-lo
+        
+        self.created_at = datetime.now().isoformat(timespec = "seconds")
+        #created_at, por exemplo, é um membro de dados PUBLICO
+        
+        #TODO: Mudar todos os atributos de self para serem membros de dados protegidos!!
+        
+        #todo o objeto da classe account vai ter o atributo fgv com valor 
+        #"Carlos Ivan"
+        #self.fgv = "Carlos Ivan"
+        
+        print(f'[INFO] Account created for {self.owner} in {self.currency} currency.')
+    
+    #Ainda não criamos métodos para a nossa classe account, mas ele tem um pai
+    #"por debaixo dos panos", do qual ele herda vários métodos: veja dir(acc1)
+    
+    #agora, faremos um método normal (sem dunder)
+    
+    def deposit(self, amount : float) -> None:
+        if amount <= 0:
+            print("[ERROR] Deposit must be positive.")
+            return
+        self._balance += amount
+        print(f"[OK] Deposited {amount:.2f} {self.currency}. New balance: {self.get_balance()} {self.currency}.")
+    
+    def withdraw(self, amount : float) -> None:
+        if amount <= 0:
+            print("[ERROR] Withdrawal must be positive.")
+            return
+        if amount > self.get_balance():
+            print("[ERROR] Insufficient funds.")
+            return
+        
+        self._balance -= amount
+        print(f"[OK] Withdrew {amount:.2f} {self.currency}. New balance: {self.get_balance()} {self.currency}.")
+    
+    def show_balance(self) -> None:
+        print("_"*40)
+        print(f"Owner: {self.owner}")
+        print(f"Balance: {self.get_balance():.2f} {self.currency}")
+        print(f"Created at: {self.created_at}")
+        print("_"*40)
+    
+    def get_balance(self) -> float:
+        #SE O BALANCE ESTIVESSE PROTEGIDO! precisaríamos de um método público
+        #para acessá-lo
+        #poderíamos preparar o saldo antes de entregar 
+        return self._balance
+        
+        
+#Driver Code
+acc1 = Account("Ana", "BRL", 20.0)
+acc2 = Account("Vitória", "USD", 10.0) 
+
+#o objeto que criamos tem atributos facilmente mutáveis, o que pode ser ruim
+#portanto, precisamos encapsular algumas coisas. Usamos o _ pra isso.
+
+acc1._balance += 1000 #isso não deveria ser possível, mas o python é permissivo
+#ou seja, o underscore é apenas uma convenção. Em linguagens como Java e C++,
+#de fato não é possível proteger.
+
+#Agora, quando usamos acc1.__balance, ele cria uma camada a mais de dificuldade, 
+#mas não dá de fato pra proteger o dado.
+#Colocamos uma camada a mais de dificuldade para a pessoa que está usando 
+#perceber que ele não deveria estar mexendo naquilo, porque é algo privado, mas 
+#não há como de fato proibir.
+
+acc1.show_balance() #o python automaticamente faz self = acc1
+acc1.deposit(1000)
+acc2.deposit(300)
+acc1.withdraw(1015)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

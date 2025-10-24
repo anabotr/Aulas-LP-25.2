@@ -89,7 +89,8 @@ def find_account(account_id: int) -> Optional[Dict]:
     return None
 
 
-def deposit(account_id: int, amount: float, description: str = "Deposit") -> None:
+def deposit(account_id: int, amount: float, 
+            description: str = "Deposit") -> None:
     """Add money to an account."""
     account = find_account(account_id)
     if not account:
@@ -104,7 +105,8 @@ def deposit(account_id: int, amount: float, description: str = "Deposit") -> Non
     print(f"[OK] Deposited {amount:.2f} {account["currency"]} into account #{account_id}.")
 
 
-def withdraw(account_id: int, amount: float, description: str = "Withdrawal") -> None:
+def withdraw(account_id: int, amount: float, 
+             description: str = "Withdrawal") -> None:
     """Withdraw money from an account."""
     account = find_account(account_id)
     if not account:
@@ -122,7 +124,8 @@ def withdraw(account_id: int, amount: float, description: str = "Withdrawal") ->
     print(f"[OK] Withdrew {amount:.2f} {account["currency"]} from account #{account_id}.")
 
 
-def transfer(from_id: int, to_id: int, amount: float, description: str = "Transfer") -> None:
+def transfer(from_id: int, to_id: int, amount: float, 
+             description: str = "Transfer") -> None:
     """Transfer funds between two accounts."""
     from_acc = find_account(from_id)
     to_acc = find_account(to_id)
