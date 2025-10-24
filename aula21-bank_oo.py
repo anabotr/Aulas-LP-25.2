@@ -93,7 +93,7 @@ class Account:
         if amount <= 0:
             print("[ERROR] Deposit must be positive.")
             return
-        self._balance += amount
+        self.set_balance(self.get_balance() + amount)
         print(f"[OK] Deposited {amount:.2f} {self.currency}. New balance: {self.get_balance()} {self.currency}.")
     
     def withdraw(self, amount : float) -> None:
@@ -104,7 +104,7 @@ class Account:
             print("[ERROR] Insufficient funds.")
             return
         
-        self._balance -= amount
+        self.set_balance(self.get_balance() - amount)
         print(f"[OK] Withdrew {amount:.2f} {self.currency}. New balance: {self.get_balance()} {self.currency}.")
     
     def show_balance(self) -> None:
@@ -119,7 +119,15 @@ class Account:
         #para acessá-lo
         #poderíamos preparar o saldo antes de entregar 
         return self._balance
-        
+    
+    def set_balance(self, new_balance: float) -> None:
+        #SE O BALANCE ESTIVESSE PROTEGIDO! precisaríamos de um método público
+        #para alterá-lo
+        if new_balance != new_balance: #só entra se for NaN
+            print("[ERROR] Balance cannot be set to NaN.")
+            return 
+        self._balance = float(new_balance)
+        return
         
 #Driver Code
 acc1 = Account("Ana", "BRL", 20.0)
@@ -142,20 +150,3 @@ acc1.show_balance() #o python automaticamente faz self = acc1
 acc1.deposit(1000)
 acc2.deposit(300)
 acc1.withdraw(1015)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
