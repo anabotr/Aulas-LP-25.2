@@ -28,6 +28,9 @@ class Account:
     Example:
         >>>...
     """
+    #cada classe deve ter apenas uma responsabilidade (propósito)
+    
+    
     #init é o primeiro método que criamos, ele é chamado automaticamente quando
     #chamamos a classe
     
@@ -57,7 +60,7 @@ class Account:
         
         #abaixo estamos criando um atributo, se o atributo owner já exite, ele
         #sobrescreve, senão, ele cria
-        self.owner = owner
+        self.customer = owner
         self.currency = currency
         
         self._balance = float(initial_balance) #usar um underscore significa
@@ -93,34 +96,42 @@ class Account:
         if amount <= 0:
             print("[ERROR] Deposit must be positive.")
             return
-        self.set_balance(self.get_balance() + amount)
-        print(f"[OK] Deposited {amount:.2f} {self.currency}. New balance: {self.get_balance()} {self.currency}.")
+        self.balance = self.balance + amount #quando atribuimos, ele 
+        #automaticamente chama o setter, quando não o fazemos, ele chama o 
+        #getter
+        print(f"[OK] Deposited {amount:.2f} {self.currency}. New balance: {self.balance} {self.currency}.")
     
     def withdraw(self, amount : float) -> None:
         if amount <= 0:
             print("[ERROR] Withdrawal must be positive.")
             return
-        if amount > self.get_balance():
+        if amount > self.balance:
             print("[ERROR] Insufficient funds.")
             return
         
-        self.set_balance(self.get_balance() - amount)
-        print(f"[OK] Withdrew {amount:.2f} {self.currency}. New balance: {self.get_balance()} {self.currency}.")
+        self.balance = self.balance - amount
+        print(f"[OK] Withdrew {amount:.2f} {self.currency}. New balance: {self.balance} {self.currency}.")
     
     def show_balance(self) -> None:
         print("_"*40)
-        print(f"Owner: {self.owner}")
-        print(f"Balance: {self.get_balance():.2f} {self.currency}")
+        print(f"Owner: {self.customer}")
+        print(f"Balance: {self.balance:.2f} {self.currency}")
         print(f"Created at: {self.created_at}")
         print("_"*40)
+        
+    #Toda a vez que atribuirmos alguma coisa a _balance, se executarão as 
+    #funções seguintes
     
-    def get_balance(self) -> float:
+    @property #estamos dizendo que isso é uma propriedade de balance, ou seja,
+    #nesse programa, quando chamamos account.balance, rodamos a função abaixo
+    def balance(self) -> float:
         #SE O BALANCE ESTIVESSE PROTEGIDO! precisaríamos de um método público
         #para acessá-lo
         #poderíamos preparar o saldo antes de entregar 
         return self._balance
     
-    def set_balance(self, new_balance: float) -> None:
+    @balance.setter
+    def balance(self, new_balance: float) -> None:
         #SE O BALANCE ESTIVESSE PROTEGIDO! precisaríamos de um método público
         #para alterá-lo
         if new_balance != new_balance: #só entra se for NaN
@@ -129,6 +140,33 @@ class Account:
         self._balance = float(new_balance)
         return
         
+    
+class Customer:
+    """docstring lindo"""
+    def __init__(self, name: str, email: str):
+        self.name = name
+        self.email = email
+        self._accounts: list[Account] = [] #o costumer tem uma lista de 
+        #elementos do tipo account, que está vazia
+    
+    def add_account(self, account: Account):
+        if account not in self._accounts:
+            self._accounts.append(account)
+    
+    @property
+    def accounts(self) -> list[Account]:
+        #vai listar as contas de um cliente
+        return list(self._accounts)
+        
+#Há tipos de relação entre classes, usaremos agregação, que será explicada em
+#outro doc (aula 22)
+    
+    
+    
+ 
+    
+ 
+    
 #Driver Code
 acc1 = Account("Ana", "BRL", 20.0)
 acc2 = Account("Vitória", "USD", 10.0) 
@@ -150,3 +188,5 @@ acc1.show_balance() #o python automaticamente faz self = acc1
 acc1.deposit(1000)
 acc2.deposit(300)
 acc1.withdraw(1015)
+acc1.balance = 10000
+print(acc1.balance)
