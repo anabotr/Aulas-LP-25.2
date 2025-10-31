@@ -1,4 +1,6 @@
-#queremos fazer a tarnsição de um sistema procedural para um sistema orientado
+#Aulas 21, 22 e 23! - encapsulamento
+
+# queremos fazer a tarnsição de um sistema procedural para um sistema orientado
 #a objetos
 
 #objetos têm estados, que são valores/características, exemplo, string = "Ana"
@@ -7,7 +9,20 @@
 #a classe diz pro python como criar um objeto com determinados comportamentos
 #e atributos
 
+#o princípio de responsabilidade única diz que cada método deve ter o mínimo de
+# responsabilidades, então, por exemplo, aqueles métodos que retornavam uma
+# string explicando o que foi feito, agora vai retornar apenas o resultado 
+# gerado e aquela string vai ser trabalho de outro método
+
 from datetime import datetime
+
+#a classe exception pode receber uma string, e seus descendentes herdam isso
+class BankingError(Exception): #essa classe herda de exception, banking error 
+# vai ser filho dele
+    pass
+class NegativeAmountError(BankingError): pass #esse é filho de banking error
+class InsufficientFundsError(BankingError): pass
+    
 
 #classes precisam de docstring (que não terminamos de completar, mas pode ter 
 #até doctest)
@@ -85,7 +100,10 @@ class Account:
         #"Carlos Ivan"
         #self.fgv = "Carlos Ivan"
         
-        print(f'[INFO] Account created for {self.owner} in {self.currency} currency.')
+        if hasattr(self.customer, "add_account"):
+            self.customer.add_account(self)
+        
+        print(f'[INFO] Account created for {self.customer} in {self.currency} currency.')
     
     #Ainda não criamos métodos para a nossa classe account, mas ele tem um pai
     #"por debaixo dos panos", do qual ele herda vários métodos: veja dir(acc1)
@@ -94,30 +112,27 @@ class Account:
     
     def deposit(self, amount : float) -> None:
         if amount <= 0:
-            print("[ERROR] Deposit must be positive.")
-            return
+            raise NegativeAmountError("[ERROR] Deposit must be positive.")
         self.balance = self.balance + amount #quando atribuimos, ele 
         #automaticamente chama o setter, quando não o fazemos, ele chama o 
         #getter
-        print(f"[OK] Deposited {amount:.2f} {self.currency}. New balance: {self.balance} {self.currency}.")
+        return self.balance
     
     def withdraw(self, amount : float) -> None:
         if amount <= 0:
-            print("[ERROR] Withdrawal must be positive.")
-            return
+            raise NegativeAmountError("[ERROR] Withdrawal must be positive.")
         if amount > self.balance:
-            print("[ERROR] Insufficient funds.")
-            return
+            raise InsufficientFundsError("[ERROR] Insufficient funds.")
         
         self.balance = self.balance - amount
-        print(f"[OK] Withdrew {amount:.2f} {self.currency}. New balance: {self.balance} {self.currency}.")
+        return self.balance
     
-    def show_balance(self) -> None:
-        print("_"*40)
-        print(f"Owner: {self.customer}")
-        print(f"Balance: {self.balance:.2f} {self.currency}")
-        print(f"Created at: {self.created_at}")
-        print("_"*40)
+    #tínhamos um método que printava e mudamos para que usássemos um método já
+    # existente e modificássemos ele de modo a retornar um objeto legível para 
+    # humanos
+    def __str__(self) -> str:
+        return f"Account (owner= {self.customer}), currency = {self.currency}, balance = {self.balance}"
+    
         
     #Toda a vez que atribuirmos alguma coisa a _balance, se executarão as 
     #funções seguintes
@@ -135,8 +150,7 @@ class Account:
         #SE O BALANCE ESTIVESSE PROTEGIDO! precisaríamos de um método público
         #para alterá-lo
         if new_balance != new_balance: #só entra se for NaN
-            print("[ERROR] Balance cannot be set to NaN.")
-            return 
+            return BankingError("[ERROR] Balance cannot be set to NaN.")
         self._balance = float(new_balance)
         return
         
@@ -149,7 +163,7 @@ class Customer:
         self._accounts: list[Account] = [] #o costumer tem uma lista de 
         #elementos do tipo account, que está vazia
     
-    def add_account(self, account: Account):
+    def add_account(self, account: Account): #isso é um MÉTODO
         if account not in self._accounts:
             self._accounts.append(account)
     
@@ -184,8 +198,8 @@ acc1._balance += 1000 #isso não deveria ser possível, mas o python é permissi
 #perceber que ele não deveria estar mexendo naquilo, porque é algo privado, mas 
 #não há como de fato proibir.
 
-acc1.show_balance() #o python automaticamente faz self = acc1
-acc1.deposit(1000)
+print(acc1)
+acc1.deposit(1000) #o python automaticamente faz self = acc1
 acc2.deposit(300)
 acc1.withdraw(1015)
 acc1.balance = 10000

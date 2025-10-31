@@ -67,5 +67,3 @@ print(arma_2)
 #volta foi mostrada no início do driver code), ou seja, os objetos não são
 #dependentes entre si
 
-
-#Mas se apagarmos a arma sem apagar o guerreiro?
