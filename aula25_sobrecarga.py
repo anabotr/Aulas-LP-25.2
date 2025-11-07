@@ -15,6 +15,8 @@ __mul__: multiplication
 __floordiv__ : floor of division
 __truediv__: divisão de ponto flutuante
 __neg(other)__: negative
+
+e muitos mais!
 _______________________________________________________________________________
 """
 
