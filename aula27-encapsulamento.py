@@ -11,7 +11,7 @@ class InsufficientFundsError(BankingError): pass
 
 
 class Account:
-    def __init__(self, owner: Customer, currency: str = "BRL", 
+    def __init__(self, owner: str, currency: str = "BRL", 
                  initial_balance: float = 0.0):
 
         #Precisamos encpsular: _tatata isso diz pra qualquer programadaor que o 
@@ -77,7 +77,7 @@ class Customer:
 acc1 = Account("Ana", "BRL", 20.0)
 acc2 = Account("Vitória", "USD", 10.0) 
 print(acc1)
-acc1.deposit(1000) #o python automaticamente faz self = acc1
+acc1.deposit(1000)
 acc2.deposit(300)
 acc1.withdraw(1015)
 acc1.balance = 10000
