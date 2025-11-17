@@ -1,0 +1,80 @@
+#Questão 2
+class BaseReport:
+    def __init__(self, data):
+    #Aqui, o OCP está sendo quebrado porque a classe está ABERTA A MODIFICAÇÃO
+    #Isso se extende a todos os seus filhos, não há encapsulamento
+        self.data = data
+        self.last_export = None
+    def generate(self):
+        print("Gerando relatório base. A empresa... (texto do relatório)")
+        return str(self.data)
+    
+    
+class SalesReport(BaseReport):
+    def generate(self, detailed=False):
+        print("Gerando relatório de vendas. A empresa... (texto do relatório)")
+        content = f"Vendas: {self.data}"
+        if detailed:
+            content += " (detalhado)"
+        print(content)
+        return content
+    
+class InventoryReport(BaseReport):
+    def generate(self):
+        print("Gerando relatório de estoque. A empresa... (texto do relatório)")
+        return f"Estoque: {self.data}"
+    
+#Cada filho de BaseReport tem um tipo de retorno para a mesma coisa: um relatório
+#Isso quebra o princípio de Liskov
+    
+class ReportService:
+    def __init__(self, report):
+        self.report = report
+        
+    def export(self, fmt="pdf"):
+        content = self.report.generate()
+        if fmt == "pdf":
+            blob = ("[PDF]" + content).encode("utf-8")
+        elif fmt == "csv":
+            blob = ("[CSV]" + content).encode("utf-8")  
+        else:
+            raise ValueError("Formato nao suportado")
+        self.report.last_export = blob
+        return blob
+    
+    def send(self, channel, target):
+        if self.report.last_export is None:
+            self.export("pdf")
+        payload = self.report.last_export
+        if channel == "email":
+            print(f"Enviando e-mail para {target}: {payload[:30]}...")
+        elif channel == "slack":
+            print(f"Postando no Slack #{target}: {payload[:30]}...")
+        else:
+            raise ValueError("Canal nao suportado")
+
+class Communicator:
+    def send_email(self, payload, address):
+        raise NotImplementedError
+    def send_slack(self, payload, channel):
+        raise NotImplementedError
+    def send_sms(self, payload, phone):
+        raise NotImplementedError
+    def main():
+        sales = SalesReport(data=[10, 20, 30])
+        service = ReportService(sales)
+        blob = service.export(fmt="pdf")
+        service.send(channel="email", target="financeiro@empresa.com")
+        inv = InventoryReport(data={"SKU1": 5, "SKU2": 2})
+        service2 = ReportService(inv)
+        service2.export(fmt="csv")
+        service2.send(channel="slack", target="relatorios")
+
+
+if __name__ == "__main__":
+    main()
+    
+#S: principio de responsabilidade unica
+#O: Open closed
+#L: Liskov - filhos e pais podem ser trocados
+#I:
