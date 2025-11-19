@@ -113,19 +113,18 @@ investment.apply_interest(10)
 investment.charge_fee(100)
 
 
+"""Usamos uma classe abstrata quando as propriedades de uma classe permitem que
+ ela assuma estados
+Quando queremos definir como estados e comportamentos de um objeto vão ser 
+ dados, definimosuma classe asbtrata
+Ao criar uma Classe abstrata, definimos estados (variaveis) e comportamentos 
+ para todos os filhos
 
+A classe abstrata teoricamente é abstrata ao herdar de BAC, mas o python só 
+reconhece como abstrata se tem um método abstrato
 
-
-
-
-
-
-
-
-
-
-
-
-
+Queremos uma classe abstrata quando pensamos "não quero que esta classe seja 
+instanciada pq não faz sentido"
+"""
 
 

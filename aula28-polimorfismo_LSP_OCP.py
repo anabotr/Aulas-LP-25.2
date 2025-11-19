@@ -8,7 +8,8 @@ class Customer:
     
     def add_account(self, account):
         print(f"[Customer] Associando conta \"{account.__class__.__name__}\" a {self._name}")
-        #account.__class__.__name__ vai nos trazer a discussão sobre polimorfismo
+        #account.__class__.__name__ vai nos trazer a discussão sobre 
+        # polimorfismo
         self._accounts.append(account)
         
     def accounts(self):
@@ -103,7 +104,6 @@ class CryptoAccount(Account): #Eu consegui criar um tipo novo de conta: aberto
 customer_1 = Customer("Pedro")
 customer_2 = Customer("Alejandra")
 customer_3 = Customer("Ana Beatriz")
-    
 
 acc1 = SavingsAccount(customer_1)
 acc2 = CheckingsAccount(customer_2)
