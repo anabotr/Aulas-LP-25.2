@@ -21,7 +21,7 @@ print("_"*60)
 
 indices = ["Aluno 1","Aluno 2", "Aluno 3"]
 colunas = ["nome", "idade", "matricula"]
-dados = [["Nome 1", 15,100],["Nome 2", 21, np.NaN],["Nome 3",18, 102]]
+dados = [["Nome 1", 15,100],["Nome 2", 21, np.nan],["Nome 3",18, 102]]
 
 df = pd.DataFrame(dados, index=indices, columns=colunas)
 print(df)
@@ -33,7 +33,7 @@ print("_"*60)
 print(df[df["matricula"].isnull()],sep="")
 print("_"*60)
 print(df.dropna(thresh=2, inplace=True)) 
-# o thresh limita a quantidade mínima
+# o thresh diz limite mínimo de valores não nulos necessários para manter a linha
 print("_"*60)
 print(df.fillna(101, inplace=True))
 print(df)

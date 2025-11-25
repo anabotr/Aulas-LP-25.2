@@ -1,0 +1,16 @@
+\contentsline {section}{\numberline {1}Pandas}{2}{}%
+\contentsline {subsection}{\numberline {1.1}DataFrames}{2}{}%
+\contentsline {subsection}{\numberline {1.2}Gráficos}{2}{}%
+\contentsline {section}{\numberline {2}NumPy}{3}{}%
+\contentsline {section}{\numberline {3}Orientação a Objetos}{3}{}%
+\contentsline {subsection}{\numberline {3.1}Polimorfismo}{4}{}%
+\contentsline {subsection}{\numberline {3.2}Sobrecarga}{4}{}%
+\contentsline {subsection}{\numberline {3.3}Associação}{4}{}%
+\contentsline {subsection}{\numberline {3.4}Composição}{5}{}%
+\contentsline {subsection}{\numberline {3.5}Agregação}{5}{}%
+\contentsline {subsection}{\numberline {3.6}Encapsulamento}{5}{}%
+\contentsline {subsubsection}{\numberline {3.6.1}Getter e Setter}{5}{}%
+\contentsline {subsection}{\numberline {3.7}\textbf {S}RP: Princípio de Responsabilidade Única}{5}{}%
+\contentsline {subsection}{\numberline {3.8}\textbf {O}CP: Open Closed Principle}{5}{}%
+\contentsline {subsection}{\numberline {3.9}\textbf {L}SP: Princípio de Substituição de Liskov}{6}{}%
+\contentsline {subsection}{\numberline {3.10}\textbf {I}SP: Princípio de Segregação das Interfaces}{6}{}%
