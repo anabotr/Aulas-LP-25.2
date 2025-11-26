@@ -1,6 +1,6 @@
-PWD c:\Users\anabo\Faculdade\2_período\LP\Aulas\Aulas-LP-25.2
+PWD c:\Users\anabo\Faculdade\2_período\LP\Aulas\Aulas-LP-25.2\RevisaoA2
 INPUT C:\Users\anabo\AppData\Local\MiKTeX\miktex\data\le\pdftex\pdflatex.fmt
-INPUT c:\Users\anabo\Faculdade\2_período\LP\Aulas\Aulas-LP-25.2\resumo.tex
+INPUT c:\Users\anabo\Faculdade\2_período\LP\Aulas\Aulas-LP-25.2\RevisaoA2\resumo.tex
 OUTPUT resumo.log
 INPUT C:\Users\anabo\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls
 INPUT C:\Users\anabo\AppData\Local\Programs\MiKTeX\tex\latex\base\article.cls

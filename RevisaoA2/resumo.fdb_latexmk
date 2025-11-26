@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1764113854.11094 "c:/Users/anabo/Faculdade/2_período/LP/Aulas/Aulas-LP-25.2/resumo.tex" "resumo.pdf" "resumo" 1764113854.99763 0
+["pdflatex"] 1764114312.26078 "c:/Users/anabo/Faculdade/2_período/LP/Aulas/Aulas-LP-25.2/RevisaoA2/resumo.tex" "resumo.pdf" "resumo" 1764114312.99896 0
   "C:/Users/anabo/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1764098254 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/anabo/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/tcrm1000.pk" 1764096368 11548 b4d401eee5ecb9bcac85af45340de4c2 ""
   "C:/Users/anabo/AppData/Local/MiKTeX/miktex/data/le/pdftex/pdflatex.fmt" 1763486077 24225047 2cf6f7329c49557fe9d9867d3c2fa6c4 ""
@@ -105,10 +105,10 @@
   "C:/Users/anabo/AppData/Local/Programs/MiKTeX/tex/latex/tools/verbatim.sty" 1700599895 7500 db31c3d04f8bc9010e47a5efbbace9ff ""
   "C:/Users/anabo/AppData/Local/Programs/MiKTeX/tex/latex/trimspaces/trimspaces.sty" 1253169183 1380 971a51b00a14503ddf754cab24c3f209 ""
   "C:/Users/anabo/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1700127522 55487 80a65caedd3722f4c20a14a69e785d8f ""
-  "c:/Users/anabo/Faculdade/2_período/LP/Aulas/Aulas-LP-25.2/resumo.tex" 1764113853 19116 88c5122ab9512347142b9ccecf7c60d9 ""
-  "resumo.aux" 1764113854 1850 a706ae43ed4c86630a4094930aeab1ed "pdflatex"
+  "c:/Users/anabo/Faculdade/2_período/LP/Aulas/Aulas-LP-25.2/RevisaoA2/resumo.tex" 1764113853 19116 88c5122ab9512347142b9ccecf7c60d9 ""
+  "resumo.aux" 1764114312 1850 a706ae43ed4c86630a4094930aeab1ed "pdflatex"
   "resumo.tex" 1764113853 19116 88c5122ab9512347142b9ccecf7c60d9 ""
-  "resumo.toc" 1764113854 1158 f62149fe2b7f9837b3a4672c8e5dc316 "pdflatex"
+  "resumo.toc" 1764114312 1158 f62149fe2b7f9837b3a4672c8e5dc316 "pdflatex"
   (generated)
   "resumo.aux"
   "resumo.log"
