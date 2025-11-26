@@ -96,7 +96,7 @@ coluna a coluna\footnote{axis = 0 faz o contrário, remove linhas.}. O padrão d
 
 • É possível criar uma série comparando colunas, por exemplo \textbf{df["idade"] $>$ 18}. Ainda, é 
 fácil colocar isso num dataframe \textbf{df[df["idade"] $>$ 18]}. Conseguimos colocar mais de uma 
-condição usando o operador "e": \textbf{\&} ou o operador "ou": \textbf{|}.
+condição usando o operador "e": \textbf{\&} ou o operador "ou": \textbf{$|$}.
 
 • Ainda, a função \textbf{df.isnull()} retorna o df com valores booleanos. Podemos usar comparações 
 desse tipo para criar df's menores. A \textbf{df.dropna(thresh = 2, inplace = True)} apaga as linhas
@@ -105,10 +105,10 @@ células nulas com o valor 15.
 
 • Outro comando importante para pandas é o \textbf{pd.read\_csv("arqv.csv", sep = ".")}, onde sep é 
 o separador utilizado no arquivo. Podemos salvar os dados, em csv, por exemplo com 
-\textbf{(df.to\_csv("dados.csv", encoding = "utf-8"))}.
+\textbf{df.to\_csv("dados.csv", encoding = "utf-8")}.
 
 • Para converter uma coluna pro tipo data, basta fazer 
-\textbf{df["data"] = df.to\_datetime(df["data"])]}
+\textbf{df["data"] = df.to\_datetime(df["data"])}
 
 • O método \textbf{df.dtypes} mostra o datatype de cada coluna. Enquando a função 
 \textbf{df.set\_index("coluna")} define qual coluna vai ser usada como índice para o df. Assim, 
@@ -157,7 +157,7 @@ de list aleatórios, de forma que cada um tem p chance de ser sorteado (p é uma
 • Uma classe diz para a linguagem de programação como criar um objeto, tendo como base determinados 
 comportamentos e atributos
 
-• Clsses precisam de docstrings, que podem ter até doctest.
+• Classes precisam de docstrings, que podem ter até doctest.
 
 • O \textbf{init} é o primeiro método que criamos, ele é chamado automaticamente quando chamamos a 
 classe. O init não cria um objeto, ele apenas inicializa com as características que definimos!
@@ -204,7 +204,7 @@ contrário, dará erro.
 
 • Sempre que estamos dentro de uma representação (\textbf{.\_\_repr\_\_} de um objeto imprimindo
 atributos ou outros objetos (self.raca, self.nome, ...) usamos sua representação por meio do !r. É
-importante que a string é PARA O USUÁRIO LER, internamente, o python trabalha com a representação 
+importante que a string é para o usuário ler, internamente, o python trabalha com a representação 
 entre os programas.
 
 •O \textbf{\_\_new\_\_} olha para a instância de uma classe, ele controla o "momento de concepção" 
