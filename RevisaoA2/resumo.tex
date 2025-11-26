@@ -117,6 +117,13 @@ o separador utilizado no arquivo. Podemos salvar os dados, em csv, por exemplo c
 • \textbf{df.describe()} retorna um resumo dos dados do dataframe, como média de cada coluna, valor 
 máximo, mínimo, desvio padrão.
 
+
+• \textbf{df.groupby("coluna")["valor"].sum()} agrupa os valores da coluna "coluna" e soma os 
+valores de "valor" de cada grupo. É possível aplicar mais de uma função: 
+\textbf{df.groupby("categoria")["vendas"].agg(["sum", "mean", "max"])} ou agrupar por índice 
+hierárquico: \textbf{df.groupby(["ano", "mes"])["vendas"].sum()} $\rightarrow$ cria níveis
+hierárquicos.
+
 \subsection{Gráficos}
 
 • Podemos fazer gráficos usando o pandas, \textbf{df.plot(x = "ano", y = "compras", title = "img")} 
@@ -227,9 +234,6 @@ código, você sabe que sua modelagem OO está ruim.
 
 • Usamos a classe \textbf{Utils} para juntar métodos importantes, ela não tem init nem self, porque 
 só serve para juntar funções que ficariam jogadas pelo código.
-
-•
-
 
 \subsection{Polimorfismo}
 Polimorfismo: "irmãos", que, em tese fazem a mesma coisa mas de formas diferentes
