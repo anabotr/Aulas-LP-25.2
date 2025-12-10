@@ -1,3 +1,5 @@
+#### Questão 1 - refatoração e uso
+
 from abc import ABC, abstractmethod
 
 class FitSquareError(Exception): ...
@@ -140,6 +142,7 @@ class SubscriptionService:
 
 
 # Não mexi no SubscriptionService mas ele poderia ter mais funções (quebra o SRP)
+# Acabou que perdi o arquivo com os princípios SOLI quebrados 
 
 #Driver Code
 
